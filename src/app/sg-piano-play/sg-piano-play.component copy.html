@@ -1,0 +1,42 @@
+<!-- <p>sg-piano-play works!</p> -->
+
+<div class="pianocontainer">
+    <!-- <div class="loading" v-if="!loadingDone">
+      loading resources... {{loading}}%
+    </div> 
+    <div class="progress">
+      <div class="bar" :style="{width:progress}"></div>
+    </div>-->
+    <button (click)="play()" class="btn">播放(play)</button>
+    <button (click)="stop()" class="btn">停止(stop)</button>
+    <!-- <select name="" id="" [(ngModel)]="selectedSong">
+      <option *ngFor v-for="let song of songs" :value="song" :key="song">
+        {{song}}
+      </option>
+    </select> -->
+    <div class="piano"
+    >
+      <div class="octave first">
+        <div class="white"   ></div>
+        <span class="black" ></span>
+        <div class="white" ></div>
+      </div>
+      <div class="octave" v-for="n in 7" :key="n">
+        <div class="white" ></div>
+        <span class="black" ></span>
+        <div class="white" ></div>
+        <span class="black"></span>
+        <div class="white" ></div>
+        <div class="white" ></div>
+        <span class="black"></span>
+        <div class="white" ></div>
+        <span class="black"></span>
+        <div class="white" ></div>
+        <span class="black" ></span>
+        <div class="white"  ></div>
+      </div>
+      <div class="octave last">
+        <div class="white" ></div>
+      </div>
+    </div>
+  </div>
