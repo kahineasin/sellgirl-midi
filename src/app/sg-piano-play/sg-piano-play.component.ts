@@ -159,6 +159,7 @@ export class SgPianoPlayComponent implements OnInit {
   private defaultSpeed=1;
   public curVolume:number=100;
   public curSpeed:Number=1;//数字越大就越慢
+  public colorIdx:any[]=[];
   constructor(private pfUtil:PfUtil) { }
 
   ngOnInit(): void {
@@ -167,8 +168,15 @@ export class SgPianoPlayComponent implements OnInit {
     me.comboList=[...me.comboList,...me.songs.map(a=>{
       return {key:a,value:a};
     })];
+    for(let i=1;i<=88;i++){
+      // me.colorIdx.push({[i]:"#ffffff"});
+      me.colorIdx.push({idx:i,hex:"#ffffff",hsl:""});
+    }
     me.onSongChange();
 
+    var fcolorMap = MIDI.Synesthesia.map();
+    // console.info(fcolorMap);
+    me.updateColorArea(fcolorMap);
     //let tmpPlugin=  loadPlugin()没有返回值
     MIDI.loadPlugin({
       //soundfontUrl: "./soundfont/",
@@ -188,6 +196,10 @@ export class SgPianoPlayComponent implements OnInit {
       onsuccess: function() {
         let player = MIDI.Player;
         player.timeWarp = 0.5; // speed the song is played back
+        // // debugger;
+        // var fcolorMap = MIDI.Synesthesia.map();
+        // // console.info(fcolorMap);
+        // me.updateColorArea(fcolorMap);
         player.addListener(function(data:any) {
           if(data.message === 144){
             me.activate(data.note - 20);
@@ -195,6 +207,9 @@ export class SgPianoPlayComponent implements OnInit {
           if(data.message === 128){
             me.deactivate(data.note - 20);
           }
+          // var colorMap = MIDI.Synesthesia.map();//颜色和音节进度无关,只和按键位置有关
+          // console.info(colorMap);
+          // me.updateColorArea(colorMap);
           // debugger;
           //console.info(data.velocity);
           //data.velocity=22;
@@ -214,7 +229,20 @@ export class SgPianoPlayComponent implements OnInit {
     });
     //debugger;
   }
-  
+  updateColorArea(map:any){
+    const me=this;
+    // for(let i in map){
+    //   if(map.hasOwnProperty(i)){
+
+    //   }
+    // }
+    for(let i=0;i< me.colorIdx.length;i++){
+      if(map.hasOwnProperty(me.colorIdx[i].idx)){
+        me.colorIdx[i].hex=map[i].hex;
+        me.colorIdx[i].hsl=map[i].hsl;
+      }
+    }
+  }
   deactivate(note:any) {
     const me=this;
     note = Number(note);

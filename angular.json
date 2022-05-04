@@ -46,8 +46,12 @@
               "src/assets/js/midi/plugin.webaudio.js",
               "src/assets/js/midi/plugin.webmidi.js",
               "src/assets/js/midi/player.js",
+              "src/assets/js/midi/synesthesia.js",
+
               "src/assets/js/util/dom_request_xhr.js",
-              "src/assets/js/util/dom_request_script.js"
+              "src/assets/js/util/dom_request_script.js",
+
+              "src/assets/inc/colorspace.js"
             ]
           },
           "configurations": {
