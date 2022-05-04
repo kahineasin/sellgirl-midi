@@ -169,12 +169,16 @@ export class SgPianoPlayComponent implements OnInit {
       onprogress: function(state:any, progress:number) {
         // me.loading = parseInt(progress * 100)
         me.loading = progress * 100;
+        // if(progress==1){
+        //   debugger;
+        // }
         if(progress == 1 && state == 'load'){
-          me.loadingDone = true
+          me.loadingDone = true;
         }
       },
       onsuccess: function() {
         let player = MIDI.Player;
+        player.timeWarp = 0.5; // speed the song is played back
         player.addListener(function(data:any) {
           if(data.message === 144){
             me.activate(data.note - 20);
@@ -184,7 +188,15 @@ export class SgPianoPlayComponent implements OnInit {
           }
           // debugger;
           //console.info(data.velocity);
-          data.velocity=22;
+          //data.velocity=22;
+          
+	// 		var delay = 0; // play one note every quarter second
+	// 		var note = 50; // the MIDI note
+	// 		var velocity = 127; // how hard the note hits
+	// 		// play the note
+	 		//MIDI.setVolume(0, 10);
+	// 		MIDI.noteOn(0, note, velocity, delay);
+	// 		MIDI.noteOff(0, note, delay + 0.75);
         });
         // debugger;//
         // let MIDIPlugin = (document as any).MIDIPlugin;
@@ -237,10 +249,11 @@ export class SgPianoPlayComponent implements OnInit {
 
   }
   play() {
+    const me=this;
     this.stopTimer()
     let player = MIDI.Player;
     //debugger;
-    player.timeWarp = 1;
+    player.timeWarp = me.curSpeed;//speed播放速度
     player.loadFile('./assets/midifiles/'+this.selectedSong, ()=>{
       player.start();
       this.initTimer()
@@ -277,5 +290,28 @@ export class SgPianoPlayComponent implements OnInit {
     return true;
     //return  this.activeKeys[(n -1)*12+x];
   }
+  public curVolume:number=100;
+  public curSpeed:number=1;//数字越大就越慢
+  public updateVolume(){
+    
+    // MIDI.setVolume(0, 10);
+    //debugger;
+    MIDI.setVolume(0, this.curVolume);
+  }
+  public updateSpeed(){
+    const me=this;
+	 		// var delay = 0; // play one note every quarter second
+			// var note = 50; // the MIDI note
+	// 		var velocity = 127; // how hard the note hits
+	// 		// play the note
+	// 		MIDI.setVolume(0, 127);
+  //debugger;
+			//MIDI.noteOn(0, note, me.curSpeed, delay);//这个指令是用来手动发音的..
+	// 		MIDI.noteOff(0, note, delay + 0.75);
+	// debugger;		
+  let	player = MIDI.Player;
+  player.timeWarp = me.curSpeed; // speed the song is played back
+  me.play();
   
+  }
 }

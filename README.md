@@ -37,6 +37,8 @@ https://github.com/SuneBear/midi.js
 https://galactic.ink/journal/category/open-source/
 https://galactic.ink/piano/
 https://github.com/cwilso/WebMIDIAPIShim  改变播放速度等
+http://www.picatino.com/piano_typewriter/piazzolla/  音谱处理
+http://localhost:22666/examples/MIDIPlayer.html  本地例子
 
 ## 待实现的功能:
 1.播放MIDI文件(引入midi.js)
@@ -45,3 +47,7 @@ https://github.com/cwilso/WebMIDIAPIShim  改变播放速度等
 
 ## 释放速度
 velocity似乎不是播放速度
+
+## 按键颜色
+D:\githubRepository\MIDI.js\examples\MIDIPlayer.html
+				var colorMap = MIDI.Synesthesia.map();
