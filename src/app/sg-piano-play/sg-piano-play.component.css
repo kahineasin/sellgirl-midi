@@ -1,6 +1,12 @@
 .pianocontainer{width:100%;
     height:100%;
-    position:relative;background-color:#303030}
+    position:relative;background-color:#303030;
+
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    
+}
 .pianocontainer .loading{position:fixed;width:100%;height:100%;display:-webkit-box;
     display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;
     -webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;font-size:25px;background-color:hsla(0,0%,100%,.8);
@@ -10,8 +16,10 @@
         background-image:-webkit-gradient(linear,left top,left bottom,from(hsla(0,0%,100%,.3)),color-stop(50%,hsla(0,0%,100%,0)),color-stop(51%,rgba(0,0,0,.12)),to(rgba(0,0,0,.04)));
         background-image:linear-gradient(hsla(0,0%,100%,.3),hsla(0,0%,100%,0) 50%,rgba(0,0,0,.12) 51%,rgba(0,0,0,.04));border-width:1px;border-style:solid;border-color:initial;-o-border-image:initial;border-image:initial;border-radius:1px} 
         .pianocontainer .progress .bar{display:inline-block;height:100%;background-image:-webkit-gradient(linear,left top,left bottom,from(rgba(118,255,53,.3)),to(#26ff53));background-image:linear-gradient(rgba(118,255,53,.3),#26ff53)}
-        .piano{position:absolute;bottom:0;left:0;width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;
-            overflow: scroll;
+        .piano{
+            /* position:absolute; */
+            bottom:0;left:0;width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;
+            overflow: auto;
         
         }.piano .octave{position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-negative:7;flex-shrink:7;-webkit-box-flex:7;-ms-flex-positive:7;flex-grow:7}.piano .octave.first{-ms-flex-negative:2;flex-shrink:2;-webkit-box-flex:2;-ms-flex-positive:2;flex-grow:2}
         .piano .octave.first .white{padding-top:282.69208154%}
