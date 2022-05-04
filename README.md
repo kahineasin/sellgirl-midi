@@ -26,10 +26,22 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
+## 项目功能简介
+1.播放midi  finished
+2.显示钢琴  finished
+3.显示乐谱
+4.调速度
+
 ## 参考资料
+https://github.com/SuneBear/midi.js
+https://galactic.ink/journal/category/open-source/
 https://galactic.ink/piano/
+https://github.com/cwilso/WebMIDIAPIShim  改变播放速度等
 
 ## 待实现的功能:
 1.播放MIDI文件(引入midi.js)
   https://github.com/mudcube/MIDI.js
 2.5线谱显示,同步往左滚动
+
+## 释放速度
+velocity似乎不是播放速度

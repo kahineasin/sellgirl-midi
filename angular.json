@@ -33,12 +33,19 @@
               "src/assets/inc/shim/Base64.js",
               "src/assets/inc/shim/Base64binary.js",
               "src/assets/inc/shim/WebAudioAPI.js",
+              "src/assets/inc/shim/WebMIDIAPI.js",
+              
+              "src/assets/inc/jasmid/stream.js",
+              "src/assets/inc/jasmid/midifile.js",
+              "src/assets/inc/jasmid/replayer.js",
+
               "src/assets/js/midi/audioDetect.js",
               "src/assets/js/midi/gm.js",
               "src/assets/js/midi/loader.js",
               "src/assets/js/midi/plugin.audiotag.js",
               "src/assets/js/midi/plugin.webaudio.js",
               "src/assets/js/midi/plugin.webmidi.js",
+              "src/assets/js/midi/player.js",
               "src/assets/js/util/dom_request_xhr.js",
               "src/assets/js/util/dom_request_script.js"
             ]

@@ -134,41 +134,148 @@ export class SgPianoPlayComponent implements OnInit {
     'Yoake Umarekuru Shoujo.mid',
     'Yume wa Nando mo Umarekawaru.mid',
     'ZZZ.mid' ];
+
+    public comboList:any[]=[
+    ];
+    
+   public loading=0;
+   public loadingDone=false;
+   
+  private timer:any=null;
+  private totalTime=0;
+  private startTime=0;
+  public activeKeys:any={
+    // 5:true,
+    // 6:true
+  };
+  public progress:any;
+  public selectedSong='Blue Bird.mid';
+  
   constructor() { }
 
   ngOnInit(): void {
-  }
+    const me=this;
 
+    me.comboList=me.songs.map(a=>{
+      return {key:a,value:a};
+    });
+
+    //let tmpPlugin=  loadPlugin()没有返回值
+    MIDI.loadPlugin({
+      //soundfontUrl: "./soundfont/",
+      soundfontUrl: "./assets/soundfont/",
+      instrument: "acoustic_grand_piano",
+      //velocity:50,//找不到地方设置这个速度参数
+      onprogress: function(state:any, progress:number) {
+        // me.loading = parseInt(progress * 100)
+        me.loading = progress * 100;
+        if(progress == 1 && state == 'load'){
+          me.loadingDone = true
+        }
+      },
+      onsuccess: function() {
+        let player = MIDI.Player;
+        player.addListener(function(data:any) {
+          if(data.message === 144){
+            me.activate(data.note - 20);
+          }
+          if(data.message === 128){
+            me.deactivate(data.note - 20);
+          }
+          // debugger;
+          //console.info(data.velocity);
+          data.velocity=22;
+        });
+        // debugger;//
+        // let MIDIPlugin = (document as any).MIDIPlugin;
+        // MIDIPlugin.setVelocity(100);
+      }
+    });
+    //debugger;
+  }
+  
+  deactivate(note:any) {
+    const me=this;
+    note = Number(note);
+    //this.$delete(this.activeKeys,note)
+    delete me.activeKeys[note];
+  };
+  activate(note:any) {
+    const me=this;
+    note = Number(note)
+    if(this.activeKeys[note]){
+      this.deactivate(note)
+      //this.$nextTick(()=>{
+        setTimeout(()=>{
+          // this.$set(this.activeKeys,note,true)
+          me.activeKeys[note]=true;
+        },20)
+      //})
+    }else {
+      // this.$set(this.activeKeys,note,true)
+      me.activeKeys[note]=true;
+    }
+
+  }
+  stopTimer() {
+    let timer = this.timer;
+    clearInterval(timer);
+    this.progress = 0;
+    //this.timer = null
+  }
+  initTimer() {
+    this.startTime = +new Date();
+    this.totalTime = MIDI.Player.endTime;
+    this.timer = setInterval(()=>{
+      let timeElapsed = ((new Date() as any) - this.startTime);
+      if(timeElapsed/this.totalTime >=1){
+        this.stopTimer();
+        return;
+      }
+      this.progress = 100*timeElapsed/this.totalTime +'%';
+    },20);
+
+  }
   play() {
-    // this.stopTimer()
-    // let player = MIDI.Player
-    // player.timeWarp = 1
-    // player.loadFile('./midifiles/'+this.selectedSong, ()=>{
-    //   player.start();
-    //   this.initTimer()
-    // })
-	MIDI.loadPlugin({
-		// soundfontUrl: "./soundfont/",
-		soundfontUrl: "./assets/soundfont/",
-		instrument: "acoustic_grand_piano",
-		onprogress: function(state:any, progress:any) {
-			console.log(state, progress);
-		},
-		onsuccess: function() {
-			var delay = 0; // play one note every quarter second
-			var note = 50; // the MIDI note
-			var velocity = 127; // how hard the note hits
-			// play the note
-			MIDI.setVolume(0, 127);
-			MIDI.noteOn(0, note, velocity, delay);
-			MIDI.noteOff(0, note, delay + 0.75);
-		}
-	});
+    this.stopTimer()
+    let player = MIDI.Player;
+    //debugger;
+    player.timeWarp = 1;
+    player.loadFile('./assets/midifiles/'+this.selectedSong, ()=>{
+      player.start();
+      this.initTimer()
+    })
+    //debugger;
+
+    //测试这样可以播放音调 
+	// MIDI.loadPlugin({
+	// 	// soundfontUrl: "./soundfont/",
+	// 	soundfontUrl: "./assets/soundfont/",
+	// 	instrument: "acoustic_grand_piano",
+	// 	onprogress: function(state:any, progress:any) {
+	// 		console.log(state, progress);
+	// 	},
+	// 	onsuccess: function() {
+	// 		var delay = 0; // play one note every quarter second
+	// 		var note = 50; // the MIDI note
+	// 		var velocity = 127; // how hard the note hits
+	// 		// play the note
+	// 		MIDI.setVolume(0, 127);
+	// 		MIDI.noteOn(0, note, velocity, delay);
+	// 		MIDI.noteOff(0, note, delay + 0.75);
+	// 	}
+	// });
 
   }
   stop() {
-    // this.stopTimer()
-    // let player = MIDI.Player
-    // player.stop()
+    this.stopTimer();
+    let player = MIDI.Player;
+    player.stop();
   }
+  //x琴键位置,4~15
+  public isActive(n:number,x:number):boolean{
+    return true;
+    //return  this.activeKeys[(n -1)*12+x];
+  }
+  
 }
