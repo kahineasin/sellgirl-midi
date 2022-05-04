@@ -34,7 +34,7 @@
     <button class="btn tbarBtn" (click)="updateSpeed()" type="button">改变速度</button>
 
   </div>
-  <div class="colorArea" style="display: flex;width:100%;">
+  <div class="colorArea" style="display: flex;width:100%;overflow: scroll;">
     <div *ngFor="let n of colorIdx;index as index; first as first; last as last; odd as odd; even as even;"
       [style.backgroundColor]="n.hex">
       {{n.idx}}

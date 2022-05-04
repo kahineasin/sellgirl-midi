@@ -9,7 +9,11 @@
         box-shadow:inset 0 1px hsla(0,0%,100%,.4);
         background-image:-webkit-gradient(linear,left top,left bottom,from(hsla(0,0%,100%,.3)),color-stop(50%,hsla(0,0%,100%,0)),color-stop(51%,rgba(0,0,0,.12)),to(rgba(0,0,0,.04)));
         background-image:linear-gradient(hsla(0,0%,100%,.3),hsla(0,0%,100%,0) 50%,rgba(0,0,0,.12) 51%,rgba(0,0,0,.04));border-width:1px;border-style:solid;border-color:initial;-o-border-image:initial;border-image:initial;border-radius:1px} 
-        .pianocontainer .progress .bar{display:inline-block;height:100%;background-image:-webkit-gradient(linear,left top,left bottom,from(rgba(118,255,53,.3)),to(#26ff53));background-image:linear-gradient(rgba(118,255,53,.3),#26ff53)}.piano{position:absolute;bottom:0;left:0;width:100%;display:-webkit-box;display:-ms-flexbox;display:flex}.piano .octave{position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-negative:7;flex-shrink:7;-webkit-box-flex:7;-ms-flex-positive:7;flex-grow:7}.piano .octave.first{-ms-flex-negative:2;flex-shrink:2;-webkit-box-flex:2;-ms-flex-positive:2;flex-grow:2}
+        .pianocontainer .progress .bar{display:inline-block;height:100%;background-image:-webkit-gradient(linear,left top,left bottom,from(rgba(118,255,53,.3)),to(#26ff53));background-image:linear-gradient(rgba(118,255,53,.3),#26ff53)}
+        .piano{position:absolute;bottom:0;left:0;width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;
+            overflow: scroll;
+        
+        }.piano .octave{position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-negative:7;flex-shrink:7;-webkit-box-flex:7;-ms-flex-positive:7;flex-grow:7}.piano .octave.first{-ms-flex-negative:2;flex-shrink:2;-webkit-box-flex:2;-ms-flex-positive:2;flex-grow:2}
         .piano .octave.first .white{padding-top:282.69208154%}
         .piano .octave.first .black{width:31.41025641%;
             /* padding-top:188.46176462% */
@@ -29,6 +33,9 @@
             
             font-weight: bolder;
             text-align: center;
+            font-size: 12px;
+            min-width: 12px;
+            height: 70%;
         }
         .piano .black.active{-webkit-transform:rotateX(-1deg) scale(.95);transform:rotateX(-1deg) scale(.95);
             background-color:red;
@@ -48,6 +55,8 @@
             
             font-weight: bolder;
             text-align: center;
+            font-size: 12px;
+            min-width: 12px;
         }
             .piano .white.active{-webkit-transform:rotateX(-1deg) scale(.95);transform:rotateX(-1deg) scale(.95);background-color:red;
                 color: white;
