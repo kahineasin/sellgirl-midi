@@ -167,6 +167,7 @@ export class SgPianoPlayComponent implements OnInit {
     me.comboList=[...me.comboList,...me.songs.map(a=>{
       return {key:a,value:a};
     })];
+    me.onSongChange();
 
     //let tmpPlugin=  loadPlugin()没有返回值
     MIDI.loadPlugin({
