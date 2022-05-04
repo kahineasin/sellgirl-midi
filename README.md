@@ -33,12 +33,13 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 4.调速度  finished
 
 ## 参考资料
-https://github.com/SuneBear/midi.js
-https://galactic.ink/journal/category/open-source/
-https://galactic.ink/piano/
-https://github.com/cwilso/WebMIDIAPIShim  改变播放速度等
-http://www.picatino.com/piano_typewriter/piazzolla/  音谱处理
-http://localhost:22666/examples/MIDIPlayer.html  本地的midi.js官方例子
+1. https://github.com/qk44077907/piano-simulator 
+2. https://github.com/SuneBear/midi.js
+3. https://galactic.ink/journal/category/open-source/
+4. https://galactic.ink/piano/
+5. https://github.com/cwilso/WebMIDIAPIShim  改变播放速度等
+6. http://www.picatino.com/piano_typewriter/piazzolla/  音谱处理
+7. http://localhost:22666/examples/MIDIPlayer.html  本地的midi.js官方例子
 
 ## 待实现的功能:
 1.播放MIDI文件(引入midi.js)
