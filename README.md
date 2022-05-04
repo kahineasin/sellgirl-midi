@@ -54,3 +54,4 @@ D:\githubRepository\MIDI.js\examples\MIDIPlayer.html
 
 ## bug 
 1.第1次的开页面播放时,出现音轨错乱的问题,点第2次播放就没问题
+  换成midi.js官方的js之后, 这个bug就不出现了, 好像是之前用js是其他作者 修改过的版本
