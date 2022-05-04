@@ -13,7 +13,7 @@ export class AppComponent {
   }
   public goMidiPlay(){
     const me=this;
-    debugger;
+    //debugger;
     me.router.navigate(['/piano-play']);
   }
 }

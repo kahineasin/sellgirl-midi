@@ -215,14 +215,14 @@ export class SgPianoPlayComponent implements OnInit {
   };
   activate(note:any) {
     const me=this;
-    note = Number(note)
+    note = Number(note);
     if(this.activeKeys[note]){
-      this.deactivate(note)
+      this.deactivate(note);
       //this.$nextTick(()=>{
-        setTimeout(()=>{
+        setTimeout(function(){
           // this.$set(this.activeKeys,note,true)
           me.activeKeys[note]=true;
-        },20)
+        },20);
       //})
     }else {
       // this.$set(this.activeKeys,note,true)
@@ -251,14 +251,18 @@ export class SgPianoPlayComponent implements OnInit {
   }
   play() {
     const me=this;
-    this.stopTimer()
+    me.stopTimer();
+    // me.stop();
     let player = MIDI.Player;
     //debugger;
     player.timeWarp = me.curSpeed;//speed播放速度
-    player.loadFile('./assets/midifiles/'+this.selectedSong, ()=>{
+    player.loadFile('./assets/midifiles/'+me.selectedSong, function(){
+      // setTimeout(function(){
+      // },500);
       player.start();
-      this.initTimer()
-    })
+      me.initTimer();
+
+    });
     //debugger;
 
     //测试这样可以播放音调 

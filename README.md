@@ -51,3 +51,6 @@ velocity似乎不是播放速度
 ## 按键颜色
 D:\githubRepository\MIDI.js\examples\MIDIPlayer.html
 				var colorMap = MIDI.Synesthesia.map();
+
+## bug 
+1.第1次的开页面播放时,出现音轨错乱的问题,点第2次播放就没问题
