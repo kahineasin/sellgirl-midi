@@ -26,11 +26,14 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
-## 项目功能简介
+## 项目功能简介(this project's function)
 1.播放midi  finished
 2.显示钢琴  finished
 3.显示乐谱
 4.调速度  finished
+
+## 展示地址(demo online)
+http://midi.sellgirl.com
 
 ## 参考资料
 1. https://github.com/qk44077907/piano-simulator 
