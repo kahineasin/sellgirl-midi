@@ -30,7 +30,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 1.播放midi  finished
 2.显示钢琴  finished
 3.显示乐谱
-4.调速度
+4.调速度  finished
 
 ## 参考资料
 https://github.com/SuneBear/midi.js
@@ -38,7 +38,7 @@ https://galactic.ink/journal/category/open-source/
 https://galactic.ink/piano/
 https://github.com/cwilso/WebMIDIAPIShim  改变播放速度等
 http://www.picatino.com/piano_typewriter/piazzolla/  音谱处理
-http://localhost:22666/examples/MIDIPlayer.html  本地例子
+http://localhost:22666/examples/MIDIPlayer.html  本地的midi.js官方例子
 
 ## 待实现的功能:
 1.播放MIDI文件(引入midi.js)
