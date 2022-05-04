@@ -8,7 +8,7 @@
   </div>
   <div class="toolbar">
 
-    <button data-v-0c328de2="" class="btn tbarBtn" (click)="play()" type="button">播放(play)</button>
+    <button data-v-0c328de2="" class="btn tbarBtn" (click)="play()" type="button" [disabled]="isPreparePlay" style="width:80px">{{isPreparePlay?'准备播放':'播放(play)'}}</button>
     &nbsp;<button data-v-0c328de2="" class="btn tbarBtn" (click)="stop()" type="button">停止(stop)</button>&nbsp;
     <!-- <select data-v-0c328de2="" name="" id="">
       <option data-v-0c328de2="" value="Again.mid">

@@ -153,6 +153,7 @@ export class SgPianoPlayComponent implements OnInit {
    public selectedSong='bi_lv_se_de_tu_zi.mid';//Blue Bird.mid';
   //public selectedSong='Blue Bird.mid';//Blue Bird.mid';
   // public isFirstTime=true;
+  public isPreparePlay=false;
   constructor() { }
 
   ngOnInit(): void {
@@ -252,6 +253,10 @@ export class SgPianoPlayComponent implements OnInit {
   }
   play() {
     const me=this;
+    if(me.isPreparePlay){
+      return;
+    }
+    me.isPreparePlay=true;
     me.stopTimer();
     // me.stop();
     let player = MIDI.Player;
@@ -262,6 +267,7 @@ export class SgPianoPlayComponent implements OnInit {
       // },500);
       player.start();
       me.initTimer();
+      me.isPreparePlay=false;
       // if(me.isFirstTime){
       //   me.isFirstTime=false;
       //   setTimeout(function(){//暂时这样解决第1次播放的混乱bug
