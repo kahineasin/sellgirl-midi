@@ -22,7 +22,7 @@
       </option>
     </select> -->
   
-    <pf-select [list]="comboList" [(ngModel)]="selectedSong" [pfPlaceHolder]="'选择1级标签'" [editable]="false"
+    <pf-select [list]="comboList" [(ngModel)]="selectedSong" (ngModelChange)="onSongChange()" [pfPlaceHolder]="'选择1级标签'" [editable]="false"
       [searchable]="true">
     </pf-select>
     &nbsp;

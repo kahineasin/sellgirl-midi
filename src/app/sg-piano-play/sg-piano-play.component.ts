@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PfUtil } from 'pf-angular-helper-lib';
 declare var MIDI: any;
 
 @Component({
@@ -8,7 +9,7 @@ declare var MIDI: any;
 })
 export class SgPianoPlayComponent implements OnInit {
   public songs=[ 'Again.mid',
-  'chinasong.mid',
+  //'chinasong.mid',
     'aLIEz.mid',
     'All in good time.mid',
     'Allegro Cantabile Sound.mid',
@@ -154,7 +155,11 @@ export class SgPianoPlayComponent implements OnInit {
   //public selectedSong='Blue Bird.mid';//Blue Bird.mid';
   // public isFirstTime=true;
   public isPreparePlay=false;
-  constructor() { }
+  
+  private defaultSpeed=1;
+  public curVolume:number=100;
+  public curSpeed:Number=1;//数字越大就越慢
+  constructor(private pfUtil:PfUtil) { }
 
   ngOnInit(): void {
     const me=this;
@@ -308,8 +313,6 @@ export class SgPianoPlayComponent implements OnInit {
     return true;
     //return  this.activeKeys[(n -1)*12+x];
   }
-  public curVolume:number=100;
-  public curSpeed:number=1;//数字越大就越慢
   public updateVolume(){
     
     // MIDI.setVolume(0, 10);
@@ -330,6 +333,18 @@ export class SgPianoPlayComponent implements OnInit {
   let	player = MIDI.Player;
   player.timeWarp = me.curSpeed; // speed the song is played back
   me.play();
+  me.pfUtil.setLocalStorage(me.cacheKey+"_speed_"+me.selectedSong,me.curSpeed);
   
+  }
+  private cacheKey="sg_midi_play_speed";
+  public onSongChange(){
+    const me=this;
+    //debugger;
+    let cache=me.pfUtil.getLocalStorage(me.cacheKey+"_speed_"+me.selectedSong);
+    if(!me.pfUtil.isAllEmpty(cache)){      
+      me.curSpeed=new Number(cache);
+    }else if(me.curSpeed!==me.defaultSpeed){
+      me.curSpeed=me.defaultSpeed;
+    }
   }
 }
