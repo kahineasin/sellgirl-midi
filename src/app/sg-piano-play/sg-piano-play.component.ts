@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PfUtil } from 'pf-angular-helper-lib';
+import { interval } from 'rxjs';
 declare var MIDI: any;
 
 @Component({
@@ -150,6 +151,11 @@ export class SgPianoPlayComponent implements OnInit {
     // 5:true,
     // 6:true
   };
+  //如果只用1个定时器,这个属性不需要的
+  public lastActiveKeys:any={
+    // 5:true,
+    // 6:true
+  };
   public progress:any;
    public selectedSong='bi_lv_se_de_tu_zi.mid';//Blue Bird.mid';
   //public selectedSong='Blue Bird.mid';//Blue Bird.mid';
@@ -159,7 +165,10 @@ export class SgPianoPlayComponent implements OnInit {
   private defaultSpeed=1;
   public curVolume:number=100;
   public curSpeed:Number=1;//数字越大就越慢
-  public colorIdx:any[]=[];
+  public colorIdx:{idx:number,hsl:string,hex:string}[]=[];
+  public colorRect:any[]=[
+    
+  ];
   constructor(private pfUtil:PfUtil) { }
 
   ngOnInit(): void {
@@ -171,12 +180,30 @@ export class SgPianoPlayComponent implements OnInit {
     for(let i=1;i<=88;i++){
       // me.colorIdx.push({[i]:"#ffffff"});
       me.colorIdx.push({idx:i,hex:"#ffffff",hsl:""});
+      me.colorRect.push([]);
     }
+
     me.onSongChange();
 
     var fcolorMap = MIDI.Synesthesia.map();
     // console.info(fcolorMap);
     me.updateColorArea(fcolorMap);
+    
+    // //测试数据,测试色块移动成功
+    // let tmpColor=me.colorIdx.find(a=>a.idx===8)?.hex;
+    // let rect01={y1:100,y2:200,hex:tmpColor,hashId:PfUtil.newHashId()};
+    // me.colorRect[8].push(rect01);
+    // me.colorRect[9].push({y1:150,y2:220,hex:me.colorIdx.find(a=>a.idx===9)?.hex});
+    // let inter=setInterval(function(){      
+    //   if(rect01.y1>300){
+    //     clearInterval(inter);
+    //     //me.colorRect[8].removeAll((a:any)=>a.hashId===rect01.hashId);
+    //     me.colorRect[8].splice(me.colorRect[8].findIndex((a:any)=>a.hashId===rect01.hashId), 1);
+    //   }
+    //   rect01.y1+=1;rect01.y2+=1;
+    //   // rect01.top+=1;
+    // },100);
+
     //let tmpPlugin=  loadPlugin()没有返回值
     MIDI.loadPlugin({
       //soundfontUrl: "./soundfont/",
@@ -243,11 +270,84 @@ export class SgPianoPlayComponent implements OnInit {
       }
     }
   }
+  protected testConsole(...msg: any) {
+    const me = this;
+    let r="";
+    for(let i=0;i<msg.length;i++){
+      r+=msg[i]+"_";
+    }
+    console.info(
+      me.pfUtil.formatTime(new Date(), "yyyy-MM-dd HH:mm:ss") +
+        "--------------------" +
+        r +
+        "--------------------"
+    );
+  }
+  getRectQty():number{
+    const me=this;
+    let r:number=0;
+    // debugger;
+    for(let i=0;i<me.colorRect.length;i++){
+      for(let j=0;j<me.colorRect[i].length;j++){
+        r+=1;
+      }
+    }
+    return r;
+  }
+  addRect(note:number,millionSecond:number){
+
+    const me=this;
+    
+    let height:number=800;//假设的滚动距离
+    let oneTime:number=1000;//从上滚到下的时间
+    let speed=height/oneTime;
+
+    let intervalTime:number=20;
+    let distance=speed*intervalTime;
+    // console.info("note",note);
+    // console.info("speed",speed);
+    // console.info("distance",distance);
+    //200px 10s ->  200px 10000ms
+    let tmpColor=me.colorIdx.find(a=>a.idx===note)?.hex;
+    // let rect01={y1:0,y2:height*note/oneTime,hex:tmpColor,hashId:PfUtil.newHashId()};
+    let rect01={y1:0,y2:speed+millionSecond,hex:tmpColor,hashId:PfUtil.newHashId()};
+    me.colorRect[note].push(rect01);
+    // let inter=setInterval(function(){
+      
+    //   if(rect01.y1>height){
+    //     //debugger;
+    //     clearInterval(inter);
+    //     //me.colorRect[8].removeAll((a:any)=>a.hashId===rect01.hashId);
+    //     me.colorRect[note].splice(me.colorRect[note].findIndex((a:any)=>a.hashId===rect01.hashId), 1);
+    //   }else{
+    //     // rect01.y1+=1;rect01.y2+=1;
+    //     rect01.y1=rect01.y1+distance;rect01.y2=rect01.y2+distance;
+    //     //console.info("y1",rect01.y1);
+    //   }
+    //   // rect01.top+=1;
+    // },intervalTime);
+  }
   deactivate(note:any) {
     const me=this;
     note = Number(note);
-    //this.$delete(this.activeKeys,note)
+    // //this.$delete(this.activeKeys,note)
+    // if(me.activeKeys.hasOwnProperty(note)&&me.lastActiveKeys.hasOwnProperty(note)){
+    //   let timeElapsed = new Date().getTime() -me.lastActiveKeys[note].getTime();
+    //   me.addRect(note,timeElapsed);
+    // }
+    
+    let l=me.colorRect[note].length;
+    if(l>0){
+      me.colorRect[note][l-1].y1=0;
+    }else{
+      // let tmpColor=me.colorIdx.find(a=>a.idx===note)?.hex;
+      // // let rect01={y1:0,y2:height*note/oneTime,hex:tmpColor,hashId:PfUtil.newHashId()};
+      // let rect01={y1:0,y2:1,hex:tmpColor,hashId:PfUtil.newHashId()};
+      // me.colorRect[note].push(rect01);
+    }
+    
     delete me.activeKeys[note];
+    //delete me.lastActiveKeys[note];
   };
   activate(note:any) {
     const me=this;
@@ -258,11 +358,34 @@ export class SgPianoPlayComponent implements OnInit {
         setTimeout(function(){
           // this.$set(this.activeKeys,note,true)
           me.activeKeys[note]=true;
+          //me.lastActiveKeys[note]=new Date();
         },20);
       //})
+
+      //如果原来是按下,现在又是按下,就加长色条(一般没有这种情况)
+      let l=me.colorRect[note].length;
+      if(l>0){
+        me.colorRect[note][l-1].y1=0;
+      }else{
+        let tmpColor=me.colorIdx.find(a=>a.idx===note)?.hex;
+        // let rect01={y1:0,y2:height*note/oneTime,hex:tmpColor,hashId:PfUtil.newHashId()};
+        let rect01={y1:0,y2:1,hex:tmpColor,hashId:PfUtil.newHashId()};
+        me.colorRect[note].push(rect01);
+      }      
     }else {
       // this.$set(this.activeKeys,note,true)
       me.activeKeys[note]=true;
+
+      // if(!me.lastActiveKeys.hasOwnProperty(note)){
+      //   me.lastActiveKeys[note]=new Date();
+      // }
+      
+      //如果原来没按下,现在是按下,就新增色条
+      let tmpColor=me.colorIdx.find(a=>a.idx===note)?.hex;
+      // let rect01={y1:0,y2:height*note/oneTime,hex:tmpColor,hashId:PfUtil.newHashId()};
+      let rect01={y1:0,y2:1,hex:tmpColor,hashId:PfUtil.newHashId()};
+      me.colorRect[note].push(rect01);
+      
     }
 
   }
@@ -273,6 +396,7 @@ export class SgPianoPlayComponent implements OnInit {
     //this.timer = null
   }
   initTimer() {
+    const me=this;
     this.startTime = +new Date();
     this.totalTime = MIDI.Player.endTime;
     this.timer = setInterval(()=>{
@@ -282,9 +406,34 @@ export class SgPianoPlayComponent implements OnInit {
         return;
       }
       this.progress = 100*timeElapsed/this.totalTime +'%';
+
+      
+      for(let i=me.colorRect.length-1;i>=0;i--){
+        let jLen=me.colorRect[i].length;
+        for(let j=jLen-1;j>=0;j--){
+          let rect01=me.colorRect[i][j];
+          if(rect01.y1>700){
+            // //debugger;
+            // clearInterval(inter);
+            // //me.colorRect[8].removeAll((a:any)=>a.hashId===rect01.hashId);
+            me.colorRect[i].splice(me.colorRect[i].findIndex((a:any)=>a.hashId===rect01.hashId), 1);
+          }else{
+            // rect01.y1+=1;rect01.y2+=1;         
+            //如果原来是按下,就加长最后1个色条,否则y1下移
+            if(j===jLen-1&&me.activeKeys[i]){
+              rect01.y1=0;
+            }else{
+              rect01.y1+=me.colorMoveDistance;
+            }
+            rect01.y2+=me.colorMoveDistance;
+            //console.info("y1",rect01.y1);   
+          }
+        }
+      }
     },20);
 
   }
+  private colorMoveDistance:number=8;
   play() {
     const me=this;
     if(me.isPreparePlay){

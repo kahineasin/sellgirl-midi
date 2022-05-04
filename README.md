@@ -31,6 +31,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 2.显示钢琴  finished
 3.显示乐谱
 4.调速度  finished
+5.表示按键情况的色块  finished
+6.色块能不能改为提前出
 
 ## 展示地址(demo online)
 http://midi.sellgirl.com
