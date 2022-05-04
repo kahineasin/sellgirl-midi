@@ -1,8 +1,9 @@
-<div data-v-0c328de2="" class="pianocontainer">
-  <!---->
+
     <div class="loading" *ngIf="!loadingDone">
       loading resources... {{loading}}%
     </div>
+<div *ngIf="loadingDone" class="pianocontainer">
+  <!---->
   <div data-v-0c328de2="" class="progress">
     <div data-v-0c328de2="" class="bar" [ngStyle]="{width:progress}"></div>
   </div>
