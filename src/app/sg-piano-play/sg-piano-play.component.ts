@@ -136,6 +136,7 @@ export class SgPianoPlayComponent implements OnInit {
     'ZZZ.mid' ];
 
     public comboList:any[]=[
+      {key:"bi_lv_se_de_tu_zi.mid",value:"碧绿色的兔子"}
     ];
     
    public loading=0;
@@ -149,16 +150,16 @@ export class SgPianoPlayComponent implements OnInit {
     // 6:true
   };
   public progress:any;
-  public selectedSong='Blue Bird.mid';
+  public selectedSong='bi_lv_se_de_tu_zi.mid';//Blue Bird.mid';
   
   constructor() { }
 
   ngOnInit(): void {
     const me=this;
 
-    me.comboList=me.songs.map(a=>{
+    me.comboList=[...me.comboList,...me.songs.map(a=>{
       return {key:a,value:a};
-    });
+    })];
 
     //let tmpPlugin=  loadPlugin()没有返回值
     MIDI.loadPlugin({
