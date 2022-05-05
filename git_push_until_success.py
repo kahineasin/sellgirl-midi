@@ -4,6 +4,7 @@ import os
  
 success = False
 success_return = "Everything up-to-date\n"
+success_return2 = "To http"
 i = 1
 while not success:
 	print("start", i, "th git push.")
@@ -12,7 +13,7 @@ while not success:
 	line = git_push_result.readlines()
 	for every_line in line:
 		print(every_line)
-		if every_line ==success_return:
+		if every_line ==success_return or every_line.find(success_return2, 0, len(every_line))>-1:
 			success=True
 	first_line_result = line[0]
 	# print("first_line_result is:", first_line_result)
