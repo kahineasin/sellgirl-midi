@@ -413,10 +413,11 @@ export class SgPianoPlayComponent implements OnInit {
         for(let j=jLen-1;j>=0;j--){
           let rect01=me.colorRect[i][j];
           if(rect01.y1>700){
-            // //debugger;
-            // clearInterval(inter);
-            // //me.colorRect[8].removeAll((a:any)=>a.hashId===rect01.hashId);
-            me.colorRect[i].splice(me.colorRect[i].findIndex((a:any)=>a.hashId===rect01.hashId), 1);
+            //me.colorRect[i].splice(me.colorRect[i].findIndex((a:any)=>a.hashId===rect01.hashId), 1);
+            //改善性能,1次性删除前面的
+            let removeIdx=me.colorRect[i].findIndex((a:any)=>a.hashId===rect01.hashId);
+            me.colorRect[i].splice(0, removeIdx+1);
+            break;
           }else{
             // rect01.y1+=1;rect01.y2+=1;         
             //如果原来是按下,就加长最后1个色条,否则y1下移
