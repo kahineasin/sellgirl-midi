@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start2": "ng serve --serve-path=/sellgirl-midi-release/ --base-href=/sellgirl-midi-release/",
     "build": "ng build",
     "build2": "ng build --base-href=/sellgirl-midi-release/",
     "watch": "ng build --watch --configuration development",
