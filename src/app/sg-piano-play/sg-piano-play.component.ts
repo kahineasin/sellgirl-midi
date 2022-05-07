@@ -339,45 +339,17 @@ export class SgPianoPlayComponent implements OnInit {
     }
     me.isPreparePlay = true;
     me.stopTimer();
-    // me.stop();
+
     let player = MIDI.Player;
-    //debugger;
+
     player.timeWarp = me.curSpeed; //speed播放速度
     player.loadFile('./assets/midifiles/' + me.selectedSong, function () {
-      // setTimeout(function(){
-      // },500);
       debugger;
       player.start();
       me.initTimer();
       me.isPreparePlay = false;
-      // if(me.isFirstTime){
-      //   me.isFirstTime=false;
-      //   setTimeout(function(){//暂时这样解决第1次播放的混乱bug
-      //     me.stop();
-      //     me.play();
-      //   },500);
-      // }
     });
     //debugger;
-
-    //测试这样可以播放音调
-    // MIDI.loadPlugin({
-    // 	// soundfontUrl: "./soundfont/",
-    // 	soundfontUrl: "./assets/soundfont/",
-    // 	instrument: "acoustic_grand_piano",
-    // 	onprogress: function(state:any, progress:any) {
-    // 		console.log(state, progress);
-    // 	},
-    // 	onsuccess: function() {
-    // 		var delay = 0; // play one note every quarter second
-    // 		var note = 50; // the MIDI note
-    // 		var velocity = 127; // how hard the note hits
-    // 		// play the note
-    // 		MIDI.setVolume(0, 127);
-    // 		MIDI.noteOn(0, note, velocity, delay);
-    // 		MIDI.noteOff(0, note, delay + 0.75);
-    // 	}
-    // });
   }
   stop() {
     this.stopTimer();
@@ -445,5 +417,23 @@ export class SgPianoPlayComponent implements OnInit {
     //debugger;
     //MIDI.noteOn(0, note, me.curSpeed, delay);//这个指令是用来手动发音的..
     // 		MIDI.noteOff(0, note, delay + 0.75);
+    //测试这样可以播放音调
+    // MIDI.loadPlugin({
+    // 	// soundfontUrl: "./soundfont/",
+    // 	soundfontUrl: "./assets/soundfont/",
+    // 	instrument: "acoustic_grand_piano",
+    // 	onprogress: function(state:any, progress:any) {
+    // 		console.log(state, progress);
+    // 	},
+    // 	onsuccess: function() {
+    // 		var delay = 0; // play one note every quarter second
+    // 		var note = 50; // the MIDI note
+    // 		var velocity = 127; // how hard the note hits
+    // 		// play the note
+    // 		MIDI.setVolume(0, 127);
+    // 		MIDI.noteOn(0, note, velocity, delay);
+    // 		MIDI.noteOff(0, note, delay + 0.75);
+    // 	}
+    // });
   }
 }
