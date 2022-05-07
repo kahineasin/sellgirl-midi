@@ -189,36 +189,15 @@ export class SgPianoPlayComponent implements OnInit {
     me.onSongChange();
 
     var fcolorMap = MIDI.Synesthesia.map();
-    // console.info(fcolorMap);
     me.updateColorArea(fcolorMap);
 
-    // //测试数据,测试色块移动成功
-    // let tmpColor=me.colorIdx.find(a=>a.idx===8)?.hex;
-    // let rect01={y1:100,y2:200,hex:tmpColor,hashId:PfUtil.newHashId()};
-    // me.colorRect[8].push(rect01);
-    // me.colorRect[9].push({y1:150,y2:220,hex:me.colorIdx.find(a=>a.idx===9)?.hex});
-    // let inter=setInterval(function(){
-    //   if(rect01.y1>300){
-    //     clearInterval(inter);
-    //     //me.colorRect[8].removeAll((a:any)=>a.hashId===rect01.hashId);
-    //     me.colorRect[8].splice(me.colorRect[8].findIndex((a:any)=>a.hashId===rect01.hashId), 1);
-    //   }
-    //   rect01.y1+=1;rect01.y2+=1;
-    //   // rect01.top+=1;
-    // },100);
-
-    //let tmpPlugin=  loadPlugin()没有返回值
     MIDI.loadPlugin({
       //soundfontUrl: "./soundfont/",
       soundfontUrl: './assets/soundfont/',
       instrument: 'acoustic_grand_piano',
-      //velocity:50,//找不到地方设置这个速度参数
       onprogress: function (state: any, progress: number) {
-        // me.loading = parseInt(progress * 100)
         me.loading = progress * 100;
-        // if(progress==1){
-        //   debugger;
-        // }
+
         if (progress == 1 && state == 'load') {
           me.loadingDone = true;
         }
@@ -226,10 +205,7 @@ export class SgPianoPlayComponent implements OnInit {
       onsuccess: function () {
         let player = MIDI.Player;
         player.timeWarp = 0.5; // speed the song is played back
-        // // debugger;
-        // var fcolorMap = MIDI.Synesthesia.map();
-        // // console.info(fcolorMap);
-        // me.updateColorArea(fcolorMap);
+
         player.addListener(function (data: any) {
           if (data.message === 144) {
             me.activate(data.note - 20);
@@ -237,54 +213,18 @@ export class SgPianoPlayComponent implements OnInit {
           if (data.message === 128) {
             me.deactivate(data.note - 20);
           }
-          // var colorMap = MIDI.Synesthesia.map();//颜色和音节进度无关,只和按键位置有关
-          // console.info(colorMap);
-          // me.updateColorArea(colorMap);
-          // debugger;
-          //console.info(data.velocity);
-          //data.velocity=22;
-
-          // 		var delay = 0; // play one note every quarter second
-          // 		var note = 50; // the MIDI note
-          // 		var velocity = 127; // how hard the note hits
-          // 		// play the note
-          //MIDI.setVolume(0, 10);
-          // 		MIDI.noteOn(0, note, velocity, delay);
-          // 		MIDI.noteOff(0, note, delay + 0.75);
         });
-        // debugger;//
-        // let MIDIPlugin = (document as any).MIDIPlugin;
-        // MIDIPlugin.setVelocity(100);
       },
     });
-    //debugger;
   }
   updateColorArea(map: any) {
     const me = this;
-    // for(let i in map){
-    //   if(map.hasOwnProperty(i)){
-
-    //   }
-    // }
     for (let i = 0; i < me.colorIdx.length; i++) {
       if (map.hasOwnProperty(me.colorIdx[i].idx)) {
         me.colorIdx[i].hex = map[i].hex;
         me.colorIdx[i].hsl = map[i].hsl;
       }
     }
-  }
-  protected testConsole(...msg: any) {
-    const me = this;
-    let r = '';
-    for (let i = 0; i < msg.length; i++) {
-      r += msg[i] + '_';
-    }
-    console.info(
-      me.pfUtil.formatTime(new Date(), 'yyyy-MM-dd HH:mm:ss') +
-        '--------------------' +
-        r +
-        '--------------------'
-    );
   }
   getRectQty(): number {
     const me = this;
@@ -297,61 +237,20 @@ export class SgPianoPlayComponent implements OnInit {
     }
     return r;
   }
-  addRect(note: number, millionSecond: number) {
-    const me = this;
 
-    let height: number = 800; //假设的滚动距离
-    let oneTime: number = 1000; //从上滚到下的时间
-    let speed = height / oneTime;
-
-    let intervalTime: number = 20;
-    let distance = speed * intervalTime;
-    // console.info("note",note);
-    // console.info("speed",speed);
-    // console.info("distance",distance);
-    //200px 10s ->  200px 10000ms
-    let tmpColor = me.colorIdx.find((a) => a.idx === note)?.hex;
-    // let rect01={y1:0,y2:height*note/oneTime,hex:tmpColor,hashId:PfUtil.newHashId()};
-    let rect01 = {
-      y1: 0,
-      y2: speed + millionSecond,
-      hex: tmpColor,
-      hashId: PfUtil.newHashId(),
-    };
-    me.colorRect[note].push(rect01);
-    // let inter=setInterval(function(){
-
-    //   if(rect01.y1>height){
-    //     //debugger;
-    //     clearInterval(inter);
-    //     //me.colorRect[8].removeAll((a:any)=>a.hashId===rect01.hashId);
-    //     me.colorRect[note].splice(me.colorRect[note].findIndex((a:any)=>a.hashId===rect01.hashId), 1);
-    //   }else{
-    //     // rect01.y1+=1;rect01.y2+=1;
-    //     rect01.y1=rect01.y1+distance;rect01.y2=rect01.y2+distance;
-    //     //console.info("y1",rect01.y1);
-    //   }
-    //   // rect01.top+=1;
-    // },intervalTime);
-  }
   deactivate(note: any) {
     const me = this;
     note = Number(note);
-    // //this.$delete(this.activeKeys,note)
-    // if(me.activeKeys.hasOwnProperty(note)&&me.lastActiveKeys.hasOwnProperty(note)){
-    //   let timeElapsed = new Date().getTime() -me.lastActiveKeys[note].getTime();
-    //   me.addRect(note,timeElapsed);
-    // }
 
-    let l = me.colorRect[note].length;
-    if (l > 0) {
-      me.colorRect[note][l - 1].y1 = 0;
-    } else {
-      // let tmpColor=me.colorIdx.find(a=>a.idx===note)?.hex;
-      // // let rect01={y1:0,y2:height*note/oneTime,hex:tmpColor,hashId:PfUtil.newHashId()};
-      // let rect01={y1:0,y2:1,hex:tmpColor,hashId:PfUtil.newHashId()};
-      // me.colorRect[note].push(rect01);
-    }
+    // let l = me.colorRect[note].length;
+    // if (l > 0) {
+    //   me.colorRect[note][l - 1].y1 = 0;
+    // } else {
+    //   // let tmpColor=me.colorIdx.find(a=>a.idx===note)?.hex;
+    //   // // let rect01={y1:0,y2:height*note/oneTime,hex:tmpColor,hashId:PfUtil.newHashId()};
+    //   // let rect01={y1:0,y2:1,hex:tmpColor,hashId:PfUtil.newHashId()};
+    //   // me.colorRect[note].push(rect01);
+    // }
 
     delete me.activeKeys[note];
     //delete me.lastActiveKeys[note];
@@ -361,21 +260,16 @@ export class SgPianoPlayComponent implements OnInit {
     note = Number(note);
     if (this.activeKeys[note]) {
       this.deactivate(note);
-      //this.$nextTick(()=>{
       setTimeout(function () {
-        // this.$set(this.activeKeys,note,true)
         me.activeKeys[note] = true;
-        //me.lastActiveKeys[note]=new Date();
       }, 20);
-      //})
 
-      //如果原来是按下,现在又是按下,就加长色条(一般没有这种情况)
+      //如果原来是按下,现在又是按下,就加长色条(一般没有这种情况) -- benjamin
       let l = me.colorRect[note].length;
       if (l > 0) {
         me.colorRect[note][l - 1].y1 = 0;
       } else {
         let tmpColor = me.colorIdx.find((a) => a.idx === note)?.hex;
-        // let rect01={y1:0,y2:height*note/oneTime,hex:tmpColor,hashId:PfUtil.newHashId()};
         let rect01 = {
           y1: 0,
           y2: 1,
@@ -385,16 +279,9 @@ export class SgPianoPlayComponent implements OnInit {
         me.colorRect[note].push(rect01);
       }
     } else {
-      // this.$set(this.activeKeys,note,true)
       me.activeKeys[note] = true;
-
-      // if(!me.lastActiveKeys.hasOwnProperty(note)){
-      //   me.lastActiveKeys[note]=new Date();
-      // }
-
-      //如果原来没按下,现在是按下,就新增色条
+      //如果原来没按下,现在是按下,就新增色条 -- benjamin
       let tmpColor = me.colorIdx.find((a) => a.idx === note)?.hex;
-      // let rect01={y1:0,y2:height*note/oneTime,hex:tmpColor,hashId:PfUtil.newHashId()};
       let rect01 = { y1: 0, y2: 1, hex: tmpColor, hashId: PfUtil.newHashId() };
       me.colorRect[note].push(rect01);
     }
@@ -459,6 +346,7 @@ export class SgPianoPlayComponent implements OnInit {
     player.loadFile('./assets/midifiles/' + me.selectedSong, function () {
       // setTimeout(function(){
       // },500);
+      debugger;
       player.start();
       me.initTimer();
       me.isPreparePlay = false;
@@ -510,19 +398,10 @@ export class SgPianoPlayComponent implements OnInit {
   }
   public updateSpeed() {
     const me = this;
-    // var delay = 0; // play one note every quarter second
-    // var note = 50; // the MIDI note
-    // 		var velocity = 127; // how hard the note hits
-    // 		// play the note
-    // 		MIDI.setVolume(0, 127);
-    //debugger;
-    //MIDI.noteOn(0, note, me.curSpeed, delay);//这个指令是用来手动发音的..
-    // 		MIDI.noteOff(0, note, delay + 0.75);
     // debugger;
     let player = MIDI.Player;
     player.timeWarp = me.curSpeed; // speed the song is played back
     me.play();
-    //MIDI.noteOn(0, note, me.curSpeed, delay); //为了立刻使speed生效
     me.pfUtil.setLocalStorage(
       me.cacheKey + '_speed_' + me.selectedSong,
       me.curSpeed
@@ -540,5 +419,31 @@ export class SgPianoPlayComponent implements OnInit {
     } else if (me.curSpeed !== me.defaultSpeed) {
       me.curSpeed = me.defaultSpeed;
     }
+  }
+  protected testConsole(...msg: any) {
+    const me = this;
+    let r = '';
+    for (let i = 0; i < msg.length; i++) {
+      r += msg[i] + '_';
+    }
+    console.info(
+      me.pfUtil.formatTime(new Date(), 'yyyy-MM-dd HH:mm:ss') +
+        '--------------------' +
+        r +
+        '--------------------'
+    );
+  }
+  /**
+   * 此方法用于根据键盘按键来发音,暂不使用
+   */
+  private soundByKey() {
+    // var delay = 0; // play one note every quarter second
+    // var note = 50; // the MIDI note
+    // 		var velocity = 127; // how hard the note hits
+    // 		// play the note
+    // 		MIDI.setVolume(0, 127);
+    //debugger;
+    //MIDI.noteOn(0, note, me.curSpeed, delay);//这个指令是用来手动发音的..
+    // 		MIDI.noteOff(0, note, delay + 0.75);
   }
 }
