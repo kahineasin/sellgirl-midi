@@ -32,7 +32,8 @@
         .piano .black{cursor:pointer;position:absolute;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-box-shadow:rgba(0,0,0,.3) 2px 2px 2px;
             box-shadow:2px 2px 2px rgba(0,0,0,.3);z-index:100;width:8.97435897%;
             /* padding-top:53.84621846%; */
-            padding-top:33.84621846%;
+            /* padding-top:33.84621846%; */
+            /* padding:53% auto 0px auto; */
             -webkit-transform-origin:center top 0;
             transform-origin:center top 0;-webkit-transform:translate(0) rotateX(0deg);transform:translate(0) rotateX(0deg);border-width:1px;
             border-style:solid;border-color:grey;-o-border-image:initial;border-image:initial;border-radius:0 0 5px 5px;background:#000;
@@ -44,6 +45,9 @@
             font-size: 12px;
             min-width: 12px;
             height: 70%;
+        }
+        .piano .black b{
+            position:absolute;bottom:0px;left:0px
         }
         .piano .black.active{-webkit-transform:rotateX(-1deg) scale(.95);transform:rotateX(-1deg) scale(.95);
             background-color:red;
@@ -84,4 +88,9 @@
 
         .colorArea div{
             flex:1
+        }
+        .colorArea .keyName{
+            position: absolute;bottom: 0px;color:white;
+            width: 100%;
+            word-wrap: break-word;
         }

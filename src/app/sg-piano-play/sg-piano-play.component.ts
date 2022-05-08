@@ -26,15 +26,10 @@ export class SgPianoPlayComponent implements OnInit {
     // 5:true,
     // 6:true
   };
-  //如果只用1个定时器,这个属性不需要的
-  public lastActiveKeys: any = {
-    // 5:true,
-    // 6:true
-  };
+
   public progress: any;
   public selectedSong = 'bi_lv_se_de_tu_zi.mid'; //Blue Bird.mid';
-  //public selectedSong='Blue Bird.mid';//Blue Bird.mid';
-  // public isFirstTime=true;
+
   public isPreparePlay = false;
 
   private defaultSpeed = 1;
@@ -115,15 +110,6 @@ export class SgPianoPlayComponent implements OnInit {
     const me = this;
     note = Number(note);
 
-    // let l = me.colorRect[note].length;
-    // if (l > 0) {
-    //   me.colorRect[note][l - 1].y1 = 0;
-    // } else {
-    //   // let tmpColor=me.colorIdx.find(a=>a.idx===note)?.hex;
-    //   // // let rect01={y1:0,y2:height*note/oneTime,hex:tmpColor,hashId:PfUtil.newHashId()};
-    //   // let rect01={y1:0,y2:1,hex:tmpColor,hashId:PfUtil.newHashId()};
-    //   // me.colorRect[note].push(rect01);
-    // }
 
     delete me.activeKeys[note];
     //delete me.lastActiveKeys[note];
@@ -155,7 +141,50 @@ export class SgPianoPlayComponent implements OnInit {
       me.activeKeys[note] = true;
       //如果原来没按下,现在是按下,就新增色条 -- benjamin
       let tmpColor = me.colorIdx.find((a) => a.idx === note)?.hex;
-      let rect01 = { y1: 0, y2: 1, hex: tmpColor, hashId: PfUtil.newHashId() };
+      let keyIdx=note%12-4;//0~11
+      if(keyIdx<0){keyIdx+=12;}
+      let keyName="";
+      switch(keyIdx){
+        case 0:
+          keyName="C";
+          break;
+          case 1:
+            keyName="#C";
+            break;
+            case 2:
+              keyName="D";
+              break;
+              case 3:
+                keyName="#D";
+                break;
+                case 4:
+                  keyName="E";
+                  break;
+                  case 5:
+                    keyName="F";
+                    break;
+                    case 6:
+                      keyName="#F";
+                      break;
+                      case 7:
+                        keyName="G";
+                        break;
+                        case 8:
+                          keyName="#G";
+                          break;
+                          case 9:
+                            keyName="A";
+                            break;
+                            case 10:
+                              keyName="#A";
+                              break;
+                              case 11:
+                                keyName="B";
+                                break;
+          default:
+            break
+      }
+      let rect01 = { y1: 0, y2: 1, hex: tmpColor, hashId: PfUtil.newHashId(),keyName:keyName };
       me.colorRect[note].push(rect01);
     }
   }
@@ -217,7 +246,7 @@ export class SgPianoPlayComponent implements OnInit {
 
     player.timeWarp = me.curSpeed; //speed播放速度
     player.loadFile('./assets/midifiles/' + me.selectedSong, function () {
-      debugger;
+      //debugger;
       player.start();
       me.initTimer();
       me.isPreparePlay = false;

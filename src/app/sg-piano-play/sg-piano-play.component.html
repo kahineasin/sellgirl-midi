@@ -56,7 +56,7 @@
           style="height:100%;position: relative;overflow:hidden;" [attr.pfIdx]="n.idx">
           <div *ngFor="let i of colorRect[n.idx];" style="position: absolute;overflow:hidden;"
             [ngStyle]="{top:i.y1+'px',height:(i.y2-i.y1)+'px',backgroundColor:i.hex,width:'100%'}">
-
+              <b class="keyName" >{{i.keyName}}</b>
           </div>
           <!-- <div *ngFor="let i of colorRect[n.idx];"
           style="position: absolute;" [ngStyle]="{top:'100px',height:'50px',backgroundColor:'red',width:'100%'}">
@@ -77,12 +77,12 @@
             {{isActive(n,4)?'C':'&nbsp;'}}
           </div>
           <span class="black" [ngClass]="{active:activeKeys[(n -1)*12+5]}"
-            [attr.note]="(n -1)*12+5">{{isActive(n,5)?'#\r\nC':'&nbsp;'}}</span>
+            [attr.note]="(n -1)*12+5"><b>{{isActive(n,5)?'#\r\nC':'&nbsp;'}}</b></span>
           <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+6]}" [attr.note]="(n -1)*12+6">
             {{isActive(n,6)?'D':'&nbsp;'}}
           </div>
           <span class="black" [ngClass]="{active:activeKeys[(n -1)*12+7]}"
-            [attr.note]="(n -1)*12+7">{{isActive(n,7)?'#\r\nD':'&nbsp;'}}</span>
+            [attr.note]="(n -1)*12+7"><b>{{isActive(n,7)?'#\r\nD':'&nbsp;'}}</b></span>
           <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+8]}" [attr.note]="(n -1)*12+8">
             {{isActive(n,8)?'E':'&nbsp;'}}
           </div>
@@ -90,15 +90,15 @@
             {{isActive(n,9)?'F':'&nbsp;'}}
           </div>
           <span class="black" [ngClass]="{active:activeKeys[(n -1)*12+10]}"
-            [attr.note]="(n -1)*12+10">{{isActive(n,10)?'#\r\nF':'&nbsp;'}}</span>
+            [attr.note]="(n -1)*12+10"><b>{{isActive(n,10)?'#\r\nF':'&nbsp;'}}</b></span>
           <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+11]}" [attr.note]="(n -1)*12+11">
             {{isActive(n,11)?'G':'&nbsp;'}}</div>
           <span class="black" [ngClass]="{active:activeKeys[(n -1)*12+12]}"
-            [attr.note]="(n -1)*12+12">{{isActive(n,12)?'#\r\nG':'&nbsp;'}}</span>
+            [attr.note]="(n -1)*12+12"><b>{{isActive(n,12)?'#\r\nG':'&nbsp;'}}</b></span>
           <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+13]}" [attr.note]="(n -1)*12+13">
             {{isActive(n,13)?'A':'&nbsp;'}}</div>
           <span class="black" [ngClass]="{active:activeKeys[(n -1)*12+14]}"
-            [attr.note]="(n -1)*12+14">{{isActive(n,14)?'#\r\nA':'&nbsp;'}}</span>
+            [attr.note]="(n -1)*12+14"><b>{{isActive(n,14)?'#\r\nA':'&nbsp;'}}</b></span>
           <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+15]}" [attr.note]="(n -1)*12+15">
             {{isActive(n,15)?'B':'&nbsp;'}}</div>
         </div>
