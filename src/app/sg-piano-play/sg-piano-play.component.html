@@ -1,21 +1,20 @@
-
 <div class="pianocontainer">
   <!---->
   <div class="loading" style="
-" *ngIf="!loadingDone">
-  loading resources... {{loading.toFixed(2)}}%
-</div>
-<ng-container *ngIf="loadingDone" >
-
-  <div data-v-0c328de2="" class="progress">
-    <div data-v-0c328de2="" class="bar" [ngStyle]="{width:progress}"></div>
+" *ngIf="!false">
+    loading resources... {{loading.toFixed(2)}}%
   </div>
-  <div class="toolbar">
+  <ng-container *ngIf="false">
 
-    <button data-v-0c328de2="" class="btn tbarBtn" (click)="play()" type="button" [disabled]="isPreparePlay"
-      style="width:80px">{{isPreparePlay?'准备播放':'播放(play)'}}</button>
-    &nbsp;<button data-v-0c328de2="" class="btn tbarBtn" (click)="stop()" type="button">停止(stop)</button>&nbsp;
-    <!-- <select data-v-0c328de2="" name="" id="">
+    <div data-v-0c328de2="" class="progress">
+      <div data-v-0c328de2="" class="bar" [ngStyle]="{width:progress}"></div>
+    </div>
+    <div class="toolbar">
+
+      <button data-v-0c328de2="" class="btn tbarBtn" (click)="play()" type="button" [disabled]="isPreparePlay"
+        style="width:80px">{{isPreparePlay?'准备播放':'播放(play)'}}</button>
+      &nbsp;<button data-v-0c328de2="" class="btn tbarBtn" (click)="stop()" type="button">停止(stop)</button>&nbsp;
+      <!-- <select data-v-0c328de2="" name="" id="">
       <option data-v-0c328de2="" value="Again.mid">
         Again.mid
       </option>
@@ -27,86 +26,86 @@
       </option>
     </select> -->
 
-    <pf-select [list]="comboList" [(ngModel)]="selectedSong" (ngModelChange)="onSongChange()" [pfPlaceHolder]="'选择1级标签'"
-      [editable]="false" [searchable]="true">
-    </pf-select>
-    &nbsp;
-    <input class="tbarTBox" [(ngModel)]="curVolume" type="number" style="width:50px;" max="100" />
-    <button class="btn tbarBtn" (click)="updateVolume()" type="button">改变音量</button>
-    &nbsp;
-    <input class="tbarTBox" [(ngModel)]="curSpeed" type="number" style="width:50px;" title="数字越大就越慢" step="0.5" />
-    <button class="btn tbarBtn" (click)="updateSpeed()" type="button">改变速度</button>
-    <!-- <label>当前有{{getRectQty()}}个色块</label> -->
+      <pf-select [list]="comboList" [(ngModel)]="selectedSong" (ngModelChange)="onSongChange()"
+        [pfPlaceHolder]="'选择1级标签'" [editable]="false" [searchable]="true">
+      </pf-select>
+      &nbsp;
+      <input class="tbarTBox" [(ngModel)]="curVolume" type="number" style="width:50px;" max="100" />
+      <button class="btn tbarBtn" (click)="updateVolume()" type="button">改变音量</button>
+      &nbsp;
+      <input class="tbarTBox" [(ngModel)]="curSpeed" type="number" style="width:50px;" title="数字越大就越慢" step="0.5" />
+      <button class="btn tbarBtn" (click)="updateSpeed()" type="button">改变速度</button>
+      <!-- <label>当前有{{getRectQty()}}个色块</label> -->
 
-  </div>
-  <div class="pianoMiddleContainer" style="flex: 1;
+    </div>
+    <div class="pianoMiddleContainer" style="flex: 1;
   overflow-x: scroll;">
-    <div class="pianoMiddleFlex" style="height: 100%;
+      <div class="pianoMiddleFlex" style="height: 100%;
     display: flex;
     flex-flow: column;
     overflow: hidden;
     min-width: 1000px;">
 
-      <div class="colorArea" style="display: flex;width:100%;overflow: auto;">
-        <div *ngFor="let n of colorIdx;index as index; first as first; last as last; odd as odd; even as even;"
-          [style.backgroundColor]="n.hex">
-          {{'&nbsp;'}}
+        <div class="colorArea" style="display: flex;width:100%;overflow: auto;">
+          <div *ngFor="let n of colorIdx;index as index; first as first; last as last; odd as odd; even as even;"
+            [style.backgroundColor]="n.hex">
+            {{'&nbsp;'}}
+          </div>
         </div>
-      </div>
-      <div class="colorArea" style="width: 100%;
+        <div class="colorArea" style="width: 100%;
       flex: 1;
       display: flex;">
-        <div *ngFor="let n of colorIdx;index as index; first as first; last as last; odd as odd; even as even;"
-          style="height:100%;position: relative;overflow:hidden;" [attr.pfIdx]="n.idx">
-          <div *ngFor="let i of colorRect[n.idx];" style="position: absolute;overflow:hidden;"
-            [ngStyle]="{top:i.y1+'px',height:(i.y2-i.y1)+'px',backgroundColor:i.hex,width:'100%'}">
-              <b class="keyName" >{{i.keyName}}</b>
-          </div>
-          <!-- <div *ngFor="let i of colorRect[n.idx];"
+          <div *ngFor="let n of colorIdx;index as index; first as first; last as last; odd as odd; even as even;"
+            style="height:100%;position: relative;overflow:hidden;" [attr.pfIdx]="n.idx">
+            <div *ngFor="let i of colorRect[n.idx];" style="position: absolute;overflow:hidden;"
+              [ngStyle]="{top:i.y1+'px',height:(i.y2-i.y1)+'px',backgroundColor:i.hex,width:'100%'}">
+              <b class="keyName">{{i.keyName}}</b>
+            </div>
+            <!-- <div *ngFor="let i of colorRect[n.idx];"
           style="position: absolute;" [ngStyle]="{top:'100px',height:'50px',backgroundColor:'red',width:'100%'}">
          
        </div> -->
+          </div>
         </div>
-      </div>
-      <div data-v-0c328de2="" class="piano" style="">
-        <div data-v-0c328de2="" class="octave first">
-          <div data-v-0c328de2="" note="1" class="white">A</div><span data-v-0c328de2="" note="2"
-            class="black">{{'#\r\nA'}}</span>
-          <div data-v-0c328de2="" note="3" class="white">B</div>
-        </div>
-        <div *ngFor="let n of [1,2,3,4,5,6,7];index as index; first as first; last as last; odd as odd; even as even;"
-          class="octave">
+        <div data-v-0c328de2="" class="piano" style="">
+          <div data-v-0c328de2="" class="octave first">
+            <div data-v-0c328de2="" note="1" class="white">A</div><span data-v-0c328de2="" note="2"
+              class="black">{{'#\r\nA'}}</span>
+            <div data-v-0c328de2="" note="3" class="white">B</div>
+          </div>
+          <div *ngFor="let n of [1,2,3,4,5,6,7];index as index; first as first; last as last; odd as odd; even as even;"
+            class="octave">
 
-          <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+4]}" [attr.note]="(n -1)*12+4">
-            {{isActive(n,4)?'C':'&nbsp;'}}
+            <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+4]}" [attr.note]="(n -1)*12+4">
+              {{isActive(n,4)?'C':'&nbsp;'}}
+            </div>
+            <span class="black" [ngClass]="{active:activeKeys[(n -1)*12+5]}"
+              [attr.note]="(n -1)*12+5"><b>{{isActive(n,5)?'#\r\nC':'&nbsp;'}}</b></span>
+            <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+6]}" [attr.note]="(n -1)*12+6">
+              {{isActive(n,6)?'D':'&nbsp;'}}
+            </div>
+            <span class="black" [ngClass]="{active:activeKeys[(n -1)*12+7]}"
+              [attr.note]="(n -1)*12+7"><b>{{isActive(n,7)?'#\r\nD':'&nbsp;'}}</b></span>
+            <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+8]}" [attr.note]="(n -1)*12+8">
+              {{isActive(n,8)?'E':'&nbsp;'}}
+            </div>
+            <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+9]}" [attr.note]="(n -1)*12+9">
+              {{isActive(n,9)?'F':'&nbsp;'}}
+            </div>
+            <span class="black" [ngClass]="{active:activeKeys[(n -1)*12+10]}"
+              [attr.note]="(n -1)*12+10"><b>{{isActive(n,10)?'#\r\nF':'&nbsp;'}}</b></span>
+            <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+11]}" [attr.note]="(n -1)*12+11">
+              {{isActive(n,11)?'G':'&nbsp;'}}</div>
+            <span class="black" [ngClass]="{active:activeKeys[(n -1)*12+12]}"
+              [attr.note]="(n -1)*12+12"><b>{{isActive(n,12)?'#\r\nG':'&nbsp;'}}</b></span>
+            <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+13]}" [attr.note]="(n -1)*12+13">
+              {{isActive(n,13)?'A':'&nbsp;'}}</div>
+            <span class="black" [ngClass]="{active:activeKeys[(n -1)*12+14]}"
+              [attr.note]="(n -1)*12+14"><b>{{isActive(n,14)?'#\r\nA':'&nbsp;'}}</b></span>
+            <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+15]}" [attr.note]="(n -1)*12+15">
+              {{isActive(n,15)?'B':'&nbsp;'}}</div>
           </div>
-          <span class="black" [ngClass]="{active:activeKeys[(n -1)*12+5]}"
-            [attr.note]="(n -1)*12+5"><b>{{isActive(n,5)?'#\r\nC':'&nbsp;'}}</b></span>
-          <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+6]}" [attr.note]="(n -1)*12+6">
-            {{isActive(n,6)?'D':'&nbsp;'}}
-          </div>
-          <span class="black" [ngClass]="{active:activeKeys[(n -1)*12+7]}"
-            [attr.note]="(n -1)*12+7"><b>{{isActive(n,7)?'#\r\nD':'&nbsp;'}}</b></span>
-          <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+8]}" [attr.note]="(n -1)*12+8">
-            {{isActive(n,8)?'E':'&nbsp;'}}
-          </div>
-          <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+9]}" [attr.note]="(n -1)*12+9">
-            {{isActive(n,9)?'F':'&nbsp;'}}
-          </div>
-          <span class="black" [ngClass]="{active:activeKeys[(n -1)*12+10]}"
-            [attr.note]="(n -1)*12+10"><b>{{isActive(n,10)?'#\r\nF':'&nbsp;'}}</b></span>
-          <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+11]}" [attr.note]="(n -1)*12+11">
-            {{isActive(n,11)?'G':'&nbsp;'}}</div>
-          <span class="black" [ngClass]="{active:activeKeys[(n -1)*12+12]}"
-            [attr.note]="(n -1)*12+12"><b>{{isActive(n,12)?'#\r\nG':'&nbsp;'}}</b></span>
-          <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+13]}" [attr.note]="(n -1)*12+13">
-            {{isActive(n,13)?'A':'&nbsp;'}}</div>
-          <span class="black" [ngClass]="{active:activeKeys[(n -1)*12+14]}"
-            [attr.note]="(n -1)*12+14"><b>{{isActive(n,14)?'#\r\nA':'&nbsp;'}}</b></span>
-          <div class="white" [ngClass]="{active:activeKeys[(n -1)*12+15]}" [attr.note]="(n -1)*12+15">
-            {{isActive(n,15)?'B':'&nbsp;'}}</div>
-        </div>
-        <!-- <div data-v-0c328de2="" class="octave">
+          <!-- <div data-v-0c328de2="" class="octave">
       <div data-v-0c328de2="" note="4" class="white"></div><span data-v-0c328de2="" note="5" class="black"></span>
       <div data-v-0c328de2="" note="6" class="white"></div><span data-v-0c328de2="" note="7" class="black"></span>
       <div data-v-0c328de2="" note="8" class="white"></div>
@@ -169,11 +168,11 @@
       <div data-v-0c328de2="" note="85" class="white"></div><span data-v-0c328de2="" note="86" class="black"></span>
       <div data-v-0c328de2="" note="87" class="white"></div>
     </div> -->
-        <div data-v-0c328de2="" class="octave last">
-          <div data-v-0c328de2="" note="88" class="white"></div>
+          <div data-v-0c328de2="" class="octave last">
+            <div data-v-0c328de2="" note="88" class="white"></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</ng-container>  
+  </ng-container>
 </div>
