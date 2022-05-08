@@ -65,6 +65,7 @@ export class SgPianoPlayComponent implements OnInit {
       instrument: 'acoustic_grand_piano',
       onprogress: function (state: any, progress: number) {
         me.loading = progress * 100;
+        //console.info(me.loading);
 
         if (progress == 1 && state == 'load') {
           me.loadingDone = true;
