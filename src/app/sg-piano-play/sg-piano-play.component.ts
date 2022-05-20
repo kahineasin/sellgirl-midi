@@ -128,65 +128,14 @@ export class SgPianoPlayComponent implements OnInit {
       let l = me.colorRect[note].length;
       if (l > 0) {
         me.colorRect[note][l - 1].y1 = 0;
-      } else {
-        let tmpColor = me.colorIdx.find((a) => a.idx === note)?.hex;
-        let rect01 = {
-          y1: 0,
-          y2: 1,
-          hex: tmpColor,
-          hashId: PfUtil.newHashId(),
-        };
-        me.colorRect[note].push(rect01);
+      } else {//原来是按下,现在也是按下,但色块数据是0,这种情况应该不存在.但要防止      
+        me.addColorRect(note);
       }
     } else {
       me.activeKeys[note] = true;
+
       //如果原来没按下,现在是按下,就新增色条 -- benjamin
-      let tmpColor = me.colorIdx.find((a) => a.idx === note)?.hex;
-      let keyIdx=note%12-4;//0~11
-      if(keyIdx<0){keyIdx+=12;}
-      let keyName="";
-      switch(keyIdx){
-        case 0:
-          keyName="C";
-          break;
-          case 1:
-            keyName="#C";
-            break;
-            case 2:
-              keyName="D";
-              break;
-              case 3:
-                keyName="#D";
-                break;
-                case 4:
-                  keyName="E";
-                  break;
-                  case 5:
-                    keyName="F";
-                    break;
-                    case 6:
-                      keyName="#F";
-                      break;
-                      case 7:
-                        keyName="G";
-                        break;
-                        case 8:
-                          keyName="#G";
-                          break;
-                          case 9:
-                            keyName="A";
-                            break;
-                            case 10:
-                              keyName="#A";
-                              break;
-                              case 11:
-                                keyName="B";
-                                break;
-          default:
-            break
-      }
-      let rect01 = { y1: 0, y2: 1, hex: tmpColor, hashId: PfUtil.newHashId(),keyName:keyName };
-      me.colorRect[note].push(rect01);
+      me.addColorRect(note);
     }
   }
   stopTimer() {
@@ -212,7 +161,6 @@ export class SgPianoPlayComponent implements OnInit {
         for (let j = jLen - 1; j >= 0; j--) {
           let rect01 = me.colorRect[i][j];
           if (rect01.y1 > 700) {
-            //me.colorRect[i].splice(me.colorRect[i].findIndex((a:any)=>a.hashId===rect01.hashId), 1);
             //改善性能,1次性删除前面的
             let removeIdx = me.colorRect[i].findIndex(
               (a: any) => a.hashId === rect01.hashId
@@ -220,21 +168,20 @@ export class SgPianoPlayComponent implements OnInit {
             me.colorRect[i].splice(0, removeIdx + 1);
             break;
           } else {
-            // rect01.y1+=1;rect01.y2+=1;
-            //如果原来是按下,就加长最后1个色条,否则y1下移
+            //如果当前状态是按下,最后1个色条y1不变(维持0),否则y1下移
             if (j === jLen - 1 && me.activeKeys[i]) {
               rect01.y1 = 0;
             } else {
               rect01.y1 += me.colorMoveDistance;
             }
-            rect01.y2 += me.colorMoveDistance;
-            //console.info("y1",rect01.y1);
+            //方法1 定时移动y2
+             rect01.y2 += me.colorMoveDistance;
           }
         }
       }
-    }, 20);
+    }, 20); //20
   }
-  private colorMoveDistance: number = 8;
+  private colorMoveDistance: number = 8;//8
   play() {
     const me = this;
     if (me.isPreparePlay) {
@@ -338,5 +285,57 @@ export class SgPianoPlayComponent implements OnInit {
     // 		MIDI.noteOff(0, note, delay + 0.75);
     // 	}
     // });
+  }
+  
+  private addColorRect(note:number){
+    const me = this;
+
+    let tmpColor = me.colorIdx.find((a) => a.idx === note)?.hex;
+    let keyIdx=note%12-4;//0~11
+    if(keyIdx<0){keyIdx+=12;}
+    let keyName="";
+    switch(keyIdx){
+      case 0:
+        keyName="C";
+        break;
+        case 1:
+          keyName="#C";
+          break;
+          case 2:
+            keyName="D";
+            break;
+            case 3:
+              keyName="#D";
+              break;
+              case 4:
+                keyName="E";
+                break;
+                case 5:
+                  keyName="F";
+                  break;
+                  case 6:
+                    keyName="#F";
+                    break;
+                    case 7:
+                      keyName="G";
+                      break;
+                      case 8:
+                        keyName="#G";
+                        break;
+                        case 9:
+                          keyName="A";
+                          break;
+                          case 10:
+                            keyName="#A";
+                            break;
+                            case 11:
+                              keyName="B";
+                              break;
+        default:
+          break
+    }
+    let rect01 = { y1: 0, y2: 1, hex: tmpColor, hashId: PfUtil.newHashId(),keyName:keyName };
+    me.colorRect[note].push(rect01);
+
   }
 }

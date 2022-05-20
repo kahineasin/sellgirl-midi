@@ -14,7 +14,7 @@ while not success:
 	line = git_push_result.readlines()
 	for every_line in line:
 		print(every_line)
-		if every_line ==success_return or every_line.find(success_return2, 0, len(every_line))>-1:
+		if every_line.find(success_return, 0, len(every_line))>-1 or every_line.find(success_return2, 0, len(every_line))>-1:
 			success=True
 		if every_line.find(fail_return, 0, len(every_line))>-1:
 			success=False

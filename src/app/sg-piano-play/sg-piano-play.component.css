@@ -96,3 +96,13 @@
             width: 100%;
             word-wrap: break-word;
         }
+        .colorRect{
+            position: absolute;overflow:hidden;
+            /* -webkit-transition: top 5s;
+            -o-transition-property: top;
+            -o-transition-duration: 5s;
+            -moz-transition-property: top;
+            -moz-transition-duration: 5s;
+            transition-property: top;
+            transition-duration: 5s; */
+        }

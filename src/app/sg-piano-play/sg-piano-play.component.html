@@ -1,10 +1,10 @@
 <div class="pianocontainer">
   <!---->
   <div class="loading" style="
-" *ngIf="!false">
+" *ngIf="!loadingDone">
     loading resources... {{loading.toFixed(2)}}%
   </div>
-  <ng-container *ngIf="false">
+  <ng-container *ngIf="loadingDone">
 
     <div data-v-0c328de2="" class="progress">
       <div data-v-0c328de2="" class="bar" [ngStyle]="{width:progress}"></div>
@@ -57,7 +57,7 @@
       display: flex;">
           <div *ngFor="let n of colorIdx;index as index; first as first; last as last; odd as odd; even as even;"
             style="height:100%;position: relative;overflow:hidden;" [attr.pfIdx]="n.idx">
-            <div *ngFor="let i of colorRect[n.idx];" style="position: absolute;overflow:hidden;"
+            <div *ngFor="let i of colorRect[n.idx];" class="colorRect" style=""
               [ngStyle]="{top:i.y1+'px',height:(i.y2-i.y1)+'px',backgroundColor:i.hex,width:'100%'}">
               <b class="keyName">{{i.keyName}}</b>
             </div>
